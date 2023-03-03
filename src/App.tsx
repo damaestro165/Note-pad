@@ -12,18 +12,17 @@ import { NewNote } from './NewNote';
 import { useLocalStorage } from './useLocalStorage';
 import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import NoteList from './NoteList';
 
-//30:00 continue tomorrow
+export type RawNote = {
+  id: string;
+} & RawNoteData;
 
 export type RawNoteData = {
   title: string;
   markdown: string;
   tagIds: string[];
 };
-
-export type RawNote = {
-  id: string;
-} & RawNoteData;
 
 export type Note = {
   id: string;
@@ -47,7 +46,7 @@ function App() {
   const notesWithTags = useMemo(() => {
     return notes.map((note) => {
       return {
-        ...notes,
+        ...note,
         tags: tags.filter((tag) => note.tagIds.includes(tag.id)),
       };
     });
@@ -61,12 +60,24 @@ function App() {
       ];
     });
   }
+  function addTag(tag: Tag) {
+    setTags((prev) => [...prev, tag]);
+  }
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
-        <Route index element={<h1>Home</h1>} />
-        <Route path='/new' element={<NewNote onSubmit={onCreateNote} />} />
+        <Route index element={<NoteList />} />
+        <Route
+          path='/new'
+          element={
+            <NewNote
+              onSubmit={onCreateNote}
+              onAddTag={addTag}
+              availableTags={tags}
+            />
+          }
+        />
         <Route path='/:id'>
           <Route index element={<h1>Show</h1>} />
           <Route path=' edit' element={<h1>edit</h1>} />
