@@ -67,7 +67,10 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
-        <Route index element={<NoteList availableTags={tags} />} />
+        <Route
+          index
+          element={<NoteList notes={notesWithTags} availableTags={tags} />}
+        />
         <Route
           path='/new'
           element={
