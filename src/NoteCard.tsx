@@ -12,7 +12,7 @@ function NoteCard({ id, title, tags }: SimplifiedNote) {
   return (
     <Card
       as={Link}
-      to={'/${id}'}
+      to={`/${id}`}
       className={'h-100 text-reset text-decoration-none'}
     >
       <Card.Body>
@@ -28,7 +28,9 @@ function NoteCard({ id, title, tags }: SimplifiedNote) {
               className='justify-content-center flex-wrap'
             >
               {tags.map((tag) => (
-                <Badge key={tag.id}>{tag.label}</Badge>
+                <Badge key={tag.id} className='text-truncate'>
+                  {tag.label}
+                </Badge>
               ))}
             </Stack>
           )}
