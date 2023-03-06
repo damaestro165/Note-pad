@@ -107,11 +107,23 @@ function NoteList({
         </Row>
       </Form>
       <Row xs={1} sm={2} lg={3} xl={4} className='g-3'>
-        {filteredNotes.map((note) => (
-          <Col key={note.id}>
-            <NoteCard id={note.id} title={note.title} tags={note.tags} />
-          </Col>
-        ))}
+        {filteredNotes.length === 0 ? (
+          <Stack
+            className='align-items-center justify-content-center mt-5 '
+            gap={2}
+          >
+            <h3> Empty</h3>
+            <Link to='/new'>
+              <Button variant='primary'>Create Notes </Button>
+            </Link>
+          </Stack>
+        ) : (
+          filteredNotes.map((note) => (
+            <Col key={note.id}>
+              <NoteCard id={note.id} title={note.title} tags={note.tags} />
+            </Col>
+          ))
+        )}
       </Row>
       <EditTagsModal
         onUpdateTag={updateTag}
